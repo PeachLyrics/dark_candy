@@ -7,7 +7,7 @@ void main() {
 
     //Tema
     theme: ThemeData(
-      primaryColor: Colors.pinkAccent,
+      primaryColor: Colors.indigo[700],
       backgroundColor: Colors.white,
       textTheme: TextTheme(headline1: TextStyle(fontSize: 10), headline2: TextStyle(fontSize: 20), headline3: TextStyle(fontSize: 20, color: Colors.white)),
     ),
@@ -16,9 +16,13 @@ void main() {
     initialRoute: '/primeira',
     routes: {
       '/primeira': (context) => TeladeLogin(),
-      /*'/segunda': (context) => SegundaTela(),
-      '/terceira': (context) => TerceiraTela(),
-      '/quarta': (context) => QuartaTela(),*/
+      '/segunda': (context) => MenuPrincipal(),
+       /*'/Perfil': (context) => TerceiraTela(),
+      '/Galeria': (context) => QuartaTela(),
+      '/Pedido': (context) => QuintaTela(),
+      '/Carrinho': (context) => SextaTela(),
+      '/Sobre': (context) => SetimaTela(),
+      '/Ajuda': (context) => OitavaTela(),*/
     },
   ));
 }
@@ -68,10 +72,7 @@ class _TeladeLoginState extends State<TeladeLogin> {
           child: Form(
             key: clearID,
               child: Column(children: [
-              Icon(Icons.person_sharp,
-                size: 120, 
-                color:  Theme.of(context).primaryColor
-              ),
+              Image.asset('lib/images/dark-candy-water-mark.PNG'),
 
               campoTexto('Nome de usuário', txtLogin),
               campoTexto('Senha', txtSenha),
@@ -119,16 +120,119 @@ class _TeladeLoginState extends State<TeladeLogin> {
           backgroundColor: MaterialStateProperty.resolveWith<Color>(
             (Set<MaterialState> states){
               if(states.contains(MaterialState.pressed))
-              return Colors.pinkAccent;
-              return Colors.pink[700];
+              return Colors.indigo[900];
+              return Colors.indigo[700];
             },
           ),),
         child: Text(rotulo, style: Theme.of(context).textTheme.headline3),
         onPressed: (){
-          //print('botão pressionado!');
-          
+          Navigator.pushNamed(context, '/segunda');
         },
       ),
     );
   }
+}
+
+//
+// MENU PRINCIPAL
+//
+class MenuPrincipal extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('EXPLORADOR'), centerTitle: true ),
+      backgroundColor: Colors.white,
+      body: Container(
+        padding: EdgeInsets.all(40),
+
+        //
+        // LISTVIEW
+        //
+        child: ListView(
+          children: [
+            
+            Text('Lista de opções',
+                 style: TextStyle(fontSize: 30, color:Colors.black),
+            ),
+            SizedBox(height: 40),
+
+            ListTile(
+              
+              leading: Icon(Icons.arrow_forward, color: Colors.pink[400]),
+              trailing: Icon(Icons.person, color: Colors.indigo[700]),
+              title: Text('PERFIL', style: TextStyle(fontSize: 32, color:Colors.black)),
+              
+              onTap: (){
+                print('item pressionado');
+                Navigator.pushNamed(context, '/Perfil');
+              },
+              hoverColor: Colors.indigo[00],
+
+            ),
+
+            ListTile(
+              leading: Icon(Icons.arrow_forward, color: Colors.pink[400]),
+              trailing: Icon(Icons.photo_library, color: Colors.indigo[700]),
+              title: Text('GALERIA', style: TextStyle(fontSize: 32, color:Colors.black)),
+              
+              onTap: (){
+                print('item pressionado');
+                Navigator.pushNamed(context, '/Galeria');
+              },
+              hoverColor: Colors.indigo[00],
+            ),
+
+            ListTile(
+              leading: Icon(Icons.arrow_forward, color: Colors.pink[400]),
+              trailing: Icon(Icons.content_cut,color: Colors.indigo[700]),
+              title: Text('PEDIDO', style: TextStyle(fontSize: 32, color:Colors.black)),
+              
+              onTap: (){
+                print('item pressionado');
+                Navigator.pushNamed(context, '/Pedido');
+              },
+              hoverColor: Colors.indigo[00],
+            ),
+
+            ListTile(
+              leading: Icon(Icons.arrow_forward, color: Colors.pink[400]),
+              trailing: Icon(Icons.shopping_cart, color: Colors.indigo[700]),
+              title: Text('CARRINHO', style: TextStyle(fontSize: 32, color:Colors.black)),
+              
+              onTap: (){
+                print('item pressionado');
+                Navigator.pushNamed(context, '/Carrinho');
+              },
+              hoverColor: Colors.indigo[00],
+            ),
+
+            ListTile(
+              leading: Icon(Icons.arrow_forward, color: Colors.pink[400]),
+              trailing: Icon(Icons.bookmark_border, color: Colors.indigo[700]),
+              title: Text('SOBRE', style: TextStyle(fontSize: 32, color:Colors.black)),
+              
+              onTap: (){
+                print('item pressionado');
+                Navigator.pushNamed(context, '/Sobre');
+              },
+              hoverColor: Colors.indigo[00],
+            ),
+
+            ListTile(
+              leading: Icon(Icons.arrow_forward, color: Colors.pink[400]),
+              trailing: Icon(Icons.accessibility, color: Colors.indigo[700]),
+              title: Text('AJUDA', style: TextStyle(fontSize: 32, color:Colors.black)),
+              
+              onTap: (){
+                print('item pressionado');
+                Navigator.pushNamed(context, '/Ajuda');
+              },
+              hoverColor: Colors.indigo[00],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
 }
