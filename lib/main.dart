@@ -17,8 +17,8 @@ void main() {
     routes: {
       '/primeira': (context) => TeladeLogin(),
       '/segunda': (context) => MenuPrincipal(),
-       /*'/Perfil': (context) => TerceiraTela(),
-      '/Galeria': (context) => QuartaTela(),
+      '/Perfil': (context) => Perfil(),
+      /*'/Galeria': (context) => QuartaTela(),
       '/Pedido': (context) => QuintaTela(),
       '/Carrinho': (context) => SextaTela(),
       '/Sobre': (context) => SetimaTela(),
@@ -29,8 +29,7 @@ void main() {
 
 class Mensagem{
   final String login;
-  final String senha;
-  Mensagem(this.login,this.senha);
+  Mensagem(this.login);
 }
 
 //
@@ -126,7 +125,10 @@ class _TeladeLoginState extends State<TeladeLogin> {
           ),),
         child: Text(rotulo, style: Theme.of(context).textTheme.headline3),
         onPressed: (){
-          Navigator.pushNamed(context, '/segunda');
+          var msg = Mensagem (
+                txtLogin.text,
+              );
+          Navigator.pushNamed(context, '/segunda', arguments: msg);
         },
       ),
     );
@@ -139,6 +141,11 @@ class _TeladeLoginState extends State<TeladeLogin> {
 class MenuPrincipal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Receber o objeto da classe Mensagem
+    Mensagem msg = ModalRoute.of(context).settings.arguments;
+    if (msg == null){
+      msg = Mensagem('');
+    }
     return Scaffold(
       appBar: AppBar(title: Text('EXPLORADOR'), centerTitle: true ),
       backgroundColor: Colors.white,
@@ -150,7 +157,10 @@ class MenuPrincipal extends StatelessWidget {
         //
         child: ListView(
           children: [
-            
+
+            Text('Seja bem vindo(a), '+msg.login+'.', style: TextStyle(fontSize: 15, color:Colors.black)),
+            SizedBox(height: 10),
+
             Text('Lista de opções',
                  style: TextStyle(fontSize: 30, color:Colors.black),
             ),
@@ -164,9 +174,9 @@ class MenuPrincipal extends StatelessWidget {
               
               onTap: (){
                 print('item pressionado');
-                Navigator.pushNamed(context, '/Perfil');
+                Navigator.pushNamed(context, '/Perfil', arguments: msg);
               },
-              hoverColor: Colors.indigo[00],
+              hoverColor: Colors.indigo[100],
 
             ),
 
@@ -179,7 +189,7 @@ class MenuPrincipal extends StatelessWidget {
                 print('item pressionado');
                 Navigator.pushNamed(context, '/Galeria');
               },
-              hoverColor: Colors.indigo[00],
+              hoverColor: Colors.indigo[100],
             ),
 
             ListTile(
@@ -191,7 +201,7 @@ class MenuPrincipal extends StatelessWidget {
                 print('item pressionado');
                 Navigator.pushNamed(context, '/Pedido');
               },
-              hoverColor: Colors.indigo[00],
+              hoverColor: Colors.indigo[100],
             ),
 
             ListTile(
@@ -203,7 +213,7 @@ class MenuPrincipal extends StatelessWidget {
                 print('item pressionado');
                 Navigator.pushNamed(context, '/Carrinho');
               },
-              hoverColor: Colors.indigo[00],
+              hoverColor: Colors.indigo[100],
             ),
 
             ListTile(
@@ -215,7 +225,7 @@ class MenuPrincipal extends StatelessWidget {
                 print('item pressionado');
                 Navigator.pushNamed(context, '/Sobre');
               },
-              hoverColor: Colors.indigo[00],
+              hoverColor: Colors.indigo[100],
             ),
 
             ListTile(
@@ -227,7 +237,7 @@ class MenuPrincipal extends StatelessWidget {
                 print('item pressionado');
                 Navigator.pushNamed(context, '/Ajuda');
               },
-              hoverColor: Colors.indigo[00],
+              hoverColor: Colors.indigo[100],
             ),
           ],
         ),
@@ -236,3 +246,69 @@ class MenuPrincipal extends StatelessWidget {
   }
 
 }
+
+class Perfil extends StatelessWidget{
+  
+  var txtBio = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    Mensagem msg = ModalRoute.of(context).settings.arguments;
+    if (msg == null){
+      msg = Mensagem('');
+    }
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Perfil'),centerTitle: true,
+
+        //Remover o ícone de Voltar
+        automaticallyImplyLeading: false,
+        
+      ),
+      body: Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(40),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch, 
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+
+                OutlinedButton(
+                  child: Text('Voltar'),
+                  onPressed: () {
+
+                    //Voltar para PrimeiraTela()
+                    Navigator.pop(context, '/segunda');
+
+                  },
+                ),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(Icons.supervised_user_circle, color: Colors.white, size: 300),
+                Text(msg.login, style: TextStyle(fontSize: 25, color:Colors.black)),
+                SizedBox(height: 40),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Biografia:', style: TextStyle(fontSize: 25, color: Colors.black)),
+                SizedBox(height: 10),
+                TextField(
+                  controller: txtBio, keyboardType: TextInputType.text, maxLines: 15, decoration: InputDecoration(labelText: 'Fale um pouco sobre você:', border: OutlineInputBorder(), alignLabelWithHint: true),
+                )
+              ],
+            )
+        ]),
+      ),
+    );
+  }
+}
+
+//Usuário de Teste Leonardo e suas maquinações maliciosas e desesperadoras
+//Senha de Teste SenhasuperlongaTipoIncrivelmentelongaquehackertempreguiçadeHackear
