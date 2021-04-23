@@ -14,9 +14,9 @@ class GaleriaWidget extends StatelessWidget{
       padding: EdgeInsets.all(20),
 
       decoration: BoxDecoration(
-        color: Colors.indigo[300],
+        color: Colors.pink[200],
         border: Border.all(
-          color: Colors.indigo[600],
+          color: Colors.pink[300],
           width: 2,
         ),
         borderRadius: BorderRadius.all(
