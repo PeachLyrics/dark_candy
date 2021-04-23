@@ -181,7 +181,7 @@ class MenuPrincipal extends StatelessWidget {
                 print('item pressionado');
                 Navigator.pushNamed(context, '/Perfil', arguments: msg);
               },
-              hoverColor: Colors.indigo[100],
+              hoverColor: Colors.pink[100],
 
             ),
 
@@ -194,7 +194,7 @@ class MenuPrincipal extends StatelessWidget {
                 print('item pressionado');
                 Navigator.pushNamed(context, '/Galeria');
               },
-              hoverColor: Colors.indigo[100],
+              hoverColor: Colors.pink[100],
             ),
 
             ListTile(
@@ -206,7 +206,7 @@ class MenuPrincipal extends StatelessWidget {
                 print('item pressionado');
                 Navigator.pushNamed(context, '/Pedido');
               },
-              hoverColor: Colors.indigo[100],
+              hoverColor: Colors.pink[100],
             ),
 
             /*ListTile(
@@ -218,7 +218,7 @@ class MenuPrincipal extends StatelessWidget {
                 print('item pressionado');
                 Navigator.pushNamed(context, '/Carrinho');
               },
-              hoverColor: Colors.indigo[100],
+              hoverColor: Colors.pink[100],
             ),*/ //removido por falta de razão dele estar aqui.
 
             ListTile(
@@ -230,7 +230,7 @@ class MenuPrincipal extends StatelessWidget {
                 print('item pressionado');
                 Navigator.pushNamed(context, '/Sobre');
               },
-              hoverColor: Colors.indigo[100],
+              hoverColor: Colors.pink[100],
             ),
 
             ListTile(
@@ -242,7 +242,7 @@ class MenuPrincipal extends StatelessWidget {
                 print('item pressionado');
                 Navigator.pushNamed(context, '/Ajuda');
               },
-              hoverColor: Colors.indigo[100],
+              hoverColor: Colors.pink[100],
             ),
           ],
         ),
@@ -359,7 +359,7 @@ class Galeria extends StatelessWidget{
                 print('item pressionado');
                 Navigator.pushNamed(context, '/Parte de cima');
               },
-              hoverColor: Colors.indigo[100],
+              hoverColor: Colors.pink[100],
             ),
             SizedBox(height: 5),
             ListTile(
@@ -370,7 +370,7 @@ class Galeria extends StatelessWidget{
                 print('item pressionado');
                 Navigator.pushNamed(context, '/Parte de baixo');
               },
-              hoverColor: Colors.indigo[100],
+              hoverColor: Colors.pink[100],
             ),
             SizedBox(height: 5),
             ListTile(
@@ -381,7 +381,7 @@ class Galeria extends StatelessWidget{
                 print('item pressionado');
                 Navigator.pushNamed(context, '/Conjunto');
               },
-              hoverColor: Colors.indigo[100],
+              hoverColor: Colors.pink[100],
             ),
           ],
         )
@@ -580,7 +580,7 @@ class _PedidoTelaState extends State<Pedido> {
             TextField(
               controller: txtPescoco,
               decoration: InputDecoration(
-                hintText: 'Tamanho em Milimetros',
+                hintText: 'Tamanho em centímetros',
                 labelText: 'Pescoço',
                 border: OutlineInputBorder(),
               ),
@@ -589,7 +589,7 @@ class _PedidoTelaState extends State<Pedido> {
             TextField(
               controller: txtOmbro,
               decoration: InputDecoration(
-                hintText: 'Tamanho em Milimetros',
+                hintText: 'Tamanho em centímetros',
                 labelText: 'Ombro',
                 border: OutlineInputBorder(),
                 alignLabelWithHint: true,
@@ -599,7 +599,7 @@ class _PedidoTelaState extends State<Pedido> {
             TextField(
               controller: txtBusto,
               decoration: InputDecoration(
-                hintText: 'Tamanho em Milimetros',
+                hintText: 'Tamanho em centímetros',
                 labelText: 'Busto',
                 border: OutlineInputBorder(),
                 alignLabelWithHint: true,
@@ -609,7 +609,7 @@ class _PedidoTelaState extends State<Pedido> {
             TextField(
               controller: txtCintura,
               decoration: InputDecoration(
-                hintText: 'Tamanho em Milimetros',
+                hintText: 'Tamanho em centímetros',
                 labelText: 'Cintura',
                 border: OutlineInputBorder(),
                 alignLabelWithHint: true,
@@ -619,7 +619,7 @@ class _PedidoTelaState extends State<Pedido> {
             TextField(
               controller: txtQuadril,
               decoration: InputDecoration(
-                hintText: 'Tamanho em Milimetros',
+                hintText: 'Tamanho em centímetros',
                 labelText: 'Quadril',
                 border: OutlineInputBorder(),
                 alignLabelWithHint: true,
@@ -629,7 +629,7 @@ class _PedidoTelaState extends State<Pedido> {
             TextField(
               controller: txtComprimento_do_corpo,
               decoration: InputDecoration(
-                hintText: 'Tamanho em Milimetros',
+                hintText: 'Tamanho em centímetros',
                 labelText: 'Comprimento do corpo',
                 border: OutlineInputBorder(),
                 alignLabelWithHint: true,
@@ -639,7 +639,7 @@ class _PedidoTelaState extends State<Pedido> {
             TextField(
               controller: txtBraco,
               decoration: InputDecoration(
-                hintText: 'Tamanho em Milimetros',
+                hintText: 'Tamanho em centímetros',
                 labelText: 'Braço',
                 border: OutlineInputBorder(),
                 alignLabelWithHint: true,
@@ -649,7 +649,7 @@ class _PedidoTelaState extends State<Pedido> {
             TextField(
               controller: txtPerna,
               decoration: InputDecoration(
-                hintText: 'Tamanho em Milimetros',
+                hintText: 'Tamanho em centímetros',
                 labelText: 'Perna',
                 border: OutlineInputBorder(),
                 alignLabelWithHint: true,
@@ -659,7 +659,7 @@ class _PedidoTelaState extends State<Pedido> {
             TextField(
               controller: txtCostas,
               decoration: InputDecoration(
-                hintText: 'Tamanho em Milimetros',
+                hintText: 'Tamanho em centímetros',
                 labelText: 'Costas',
                 border: OutlineInputBorder(),
                 alignLabelWithHint: true,
@@ -669,7 +669,7 @@ class _PedidoTelaState extends State<Pedido> {
             TextField(
               controller: txtCanela,
               decoration: InputDecoration(
-                hintText: 'Tamanho em Milimetros',
+                hintText: 'Tamanho em centímetros',
                 labelText: 'Canela',
                 border: OutlineInputBorder(),
                 alignLabelWithHint: true,
@@ -689,8 +689,8 @@ class _PedidoTelaState extends State<Pedido> {
                 Icons.transfer_within_a_station,
                 color: Colors.black,
               ),
-              checkColor: Colors.deepPurple[100],
-              tileColor: Colors.indigo[100],
+              checkColor: Colors.pinkAccent,
+              tileColor: Colors.pink[100],
               activeColor: Colors.black,
             ),
             CheckboxListTile(
@@ -705,8 +705,8 @@ class _PedidoTelaState extends State<Pedido> {
                 Icons.plus_one,
                 color: Colors.black,
               ),
-              checkColor: Colors.deepPurple[100],
-              tileColor: Colors.indigo[100],
+              checkColor: Colors.pinkAccent,
+              tileColor: Colors.pink[100],
               activeColor: Colors.black,
             ),
             CheckboxListTile(
@@ -721,8 +721,8 @@ class _PedidoTelaState extends State<Pedido> {
                 Icons.exposure_plus_1_outlined,
                 color: Colors.black,
               ),
-              checkColor: Colors.deepPurple[100],
-              tileColor: Colors.indigo[100],
+              checkColor: Colors.pinkAccent,
+              tileColor: Colors.pink[100],
               activeColor: Colors.black,
             ),
             RadioListTile(
