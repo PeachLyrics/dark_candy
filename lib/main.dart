@@ -948,7 +948,7 @@ class Ajuda extends StatelessWidget{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sobre'),centerTitle: true,
+        title: Text('Ajuda'),centerTitle: true,
 
         //Remover o ícone de Voltar
         automaticallyImplyLeading: false,
