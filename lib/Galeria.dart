@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
-class PerfilWidget extends StatelessWidget{
+class GaleriaWidget extends StatelessWidget{
 
-  final String nome;
-  final String codigo;
   final String foto;
 
-  PerfilWidget(this.foto,this.nome,this.codigo);
+  GaleriaWidget(this.foto);
 
   @override
   Widget build(BuildContext context){
@@ -28,8 +26,6 @@ class PerfilWidget extends StatelessWidget{
       child: Column(
         children: [
           Image.asset(foto),
-          Text(nome, style: TextStyle(fontSize: 25),),
-          Text(codigo, style: TextStyle(fontSize: 25),),
         ],
       )
     );

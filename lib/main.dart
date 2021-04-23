@@ -1,3 +1,4 @@
+import 'package:dark_candy/Galeria.dart';
 import 'package:flutter/material.dart';
 import 'package:dark_candy/PerfilDev.dart';
 
@@ -19,11 +20,14 @@ void main() {
       '/primeira': (context) => TeladeLogin(),
       '/segunda': (context) => MenuPrincipal(),
       '/Perfil': (context) => Perfil(),
-      //'/Galeria': (context) => QuartaTela(),
+      '/Galeria': (context) => Galeria(),
       '/Pedido': (context) => Pedido(),
       '/Carrinho': (context) => Carrinho(),
       '/Sobre': (context) => Sobre(),
       '/Ajuda': (context) => Ajuda(),
+      '/Parte de cima': (context) => PartCima(),
+      '/Parte de baixo': (context) => PartBaixo(),
+      '/Sapatos': (context) => Sapatos(),
     },
   ));
 }
@@ -205,7 +209,7 @@ class MenuPrincipal extends StatelessWidget {
               hoverColor: Colors.indigo[100],
             ),
 
-            ListTile(
+            /*ListTile(
               leading: Icon(Icons.arrow_forward, color: Colors.pink[400]),
               trailing: Icon(Icons.shopping_cart, color: Colors.indigo[700]),
               title: Text('CARRINHO', style: TextStyle(fontSize: 32, color:Colors.black)),
@@ -215,7 +219,7 @@ class MenuPrincipal extends StatelessWidget {
                 Navigator.pushNamed(context, '/Carrinho');
               },
               hoverColor: Colors.indigo[100],
-            ),
+            ),*/ //removido por falta de razão dele estar aqui.
 
             ListTile(
               leading: Icon(Icons.arrow_forward, color: Colors.pink[400]),
@@ -317,6 +321,192 @@ class Perfil extends StatelessWidget{
 //
 //Tela da Galeria - Léo
 //
+class Galeria extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Galeria'),centerTitle: true,
+
+        //Remover o ícone de Voltar
+        automaticallyImplyLeading: false,
+        
+      ),
+      body: Container(
+        child: ListView(
+          children: [
+            Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+
+              OutlinedButton(
+                child: Text('Voltar'),
+                onPressed: () {
+
+                  //Voltar para PrimeiraTela()
+                  Navigator.pop(context, '/segunda');
+
+                },
+              ),
+            ],
+          ),
+           SizedBox(height: 20),
+            ListTile(
+              leading: Icon(Icons.arrow_forward, color: Colors.pink[400]),
+              title: Text('Parte de cima', style: TextStyle(fontSize: 32, color:Colors.black)),
+              
+              onTap: (){
+                print('item pressionado');
+                Navigator.pushNamed(context, '/Parte de cima');
+              },
+              hoverColor: Colors.indigo[100],
+            ),
+            SizedBox(height: 5),
+            ListTile(
+              leading: Icon(Icons.arrow_forward, color: Colors.pink[400]),
+              title: Text('Parte de baixo', style: TextStyle(fontSize: 32, color:Colors.black)),
+              
+              onTap: (){
+                print('item pressionado');
+                Navigator.pushNamed(context, '/Parte de baixo');
+              },
+              hoverColor: Colors.indigo[100],
+            ),
+            SizedBox(height: 5),
+            ListTile(
+              leading: Icon(Icons.arrow_forward, color: Colors.pink[400]),
+              title: Text('Sapatos', style: TextStyle(fontSize: 32, color:Colors.black)),
+              
+              onTap: (){
+                print('item pressionado');
+                Navigator.pushNamed(context, '/Sapatos');
+              },
+              hoverColor: Colors.indigo[100],
+            ),
+          ],
+        )
+      ),
+    );
+  }
+}
+
+class PartCima extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Parte de cima'),centerTitle: true,
+
+        //Remover o ícone de Voltar
+        automaticallyImplyLeading: false,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+
+              OutlinedButton(
+                child: Text('Voltar'),
+                onPressed: () {
+
+                  //Voltar para PrimeiraTela()
+                  Navigator.pop(context, '/segunda');
+
+                },
+              ),
+            ],
+          ),
+          SizedBox(height: 20),
+            GaleriaWidget(''),
+            GaleriaWidget(''),
+            GaleriaWidget(''),
+          ],
+        ),
+      )
+    );
+  }
+}
+class PartBaixo extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Parte de baixo'),centerTitle: true,
+
+        //Remover o ícone de Voltar
+        automaticallyImplyLeading: false,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+
+              OutlinedButton(
+                child: Text('Voltar'),
+                onPressed: () {
+
+                  //Voltar para PrimeiraTela()
+                  Navigator.pop(context, '/segunda');
+
+                },
+              ),
+            ],
+          ),
+          SizedBox(height: 20),
+            GaleriaWidget(''),
+            GaleriaWidget(''),
+            GaleriaWidget(''),
+          ],
+        ),
+      )
+    );
+  }
+}
+class Sapatos extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Sapatos'),centerTitle: true,
+
+        //Remover o ícone de Voltar
+        automaticallyImplyLeading: false,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+
+              OutlinedButton(
+                child: Text('Voltar'),
+                onPressed: () {
+
+                  //Voltar para PrimeiraTela()
+                  Navigator.pop(context, '/segunda');
+
+                },
+              ),
+            ],
+          ),
+          SizedBox(height: 20),
+            GaleriaWidget(''),
+            GaleriaWidget(''),
+            GaleriaWidget(''),
+          ],
+        ),
+      )
+    );
+  }
+}
 
 //
 //Tela do Pedido - Victor
