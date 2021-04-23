@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dark_candy/PerfilDev.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -18,11 +19,11 @@ void main() {
       '/primeira': (context) => TeladeLogin(),
       '/segunda': (context) => MenuPrincipal(),
       '/Perfil': (context) => Perfil(),
-      /*'/Galeria': (context) => QuartaTela(),
-      '/Pedido': (context) => QuintaTela(),
-      '/Carrinho': (context) => SextaTela(),
-      '/Sobre': (context) => SetimaTela(),
-      '/Ajuda': (context) => OitavaTela(),*/
+      //'/Galeria': (context) => QuartaTela(),
+      '/Pedido': (context) => Pedido(),
+      '/Carrinho': (context) => Carrinho(),
+      '/Sobre': (context) => Sobre(),
+      '/Ajuda': (context) => Ajuda(),
     },
   ));
 }
@@ -33,7 +34,7 @@ class Mensagem{
 }
 
 //
-// PRIMEIRA TELA
+// PRIMEIRA TELA - Léo
 //
 
 class TeladeLogin extends StatefulWidget {
@@ -136,7 +137,7 @@ class _TeladeLoginState extends State<TeladeLogin> {
 }
 
 //
-// MENU PRINCIPAL
+// MENU PRINCIPAL - Victor
 //
 class MenuPrincipal extends StatelessWidget {
   @override
@@ -247,9 +248,12 @@ class MenuPrincipal extends StatelessWidget {
 
 }
 
+//
+// Tela do Perfil - Léo
+//
 class Perfil extends StatelessWidget{
   
-  var txtBio = TextEditingController();
+  final txtBio = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -310,5 +314,485 @@ class Perfil extends StatelessWidget{
   }
 }
 
+//
+//Tela da Galeria - Léo
+//
+
+//
+//Tela do Pedido - Victor
+//
+class pedidoc {
+  final String pescoco;
+  final String ombro;
+  final String busto;
+  final String cintura;
+  final String quadril;
+  final String comprimento_do_corpo;
+  final String braco;
+  final String perna;
+  final String costas;
+  final String canela;
+   String valor;
+  pedidoc(
+      this.pescoco,
+      this.ombro,
+      this.busto,
+      this.cintura,
+      this.quadril,
+      this.comprimento_do_corpo,
+      this.braco,
+      this.perna,
+      this.costas,
+      this.canela,
+      this.valor);
+}
+
+class Pedido extends StatefulWidget {
+  @override
+  _PedidoTelaState createState() => _PedidoTelaState();
+}
+
+class _PedidoTelaState extends State<Pedido> {
+  var txtPescoco = TextEditingController();
+  var txtOmbro = TextEditingController();
+  var txtBusto = TextEditingController();
+  var txtCintura = TextEditingController();
+  var txtQuadril = TextEditingController();
+  var txtComprimento_do_corpo = TextEditingController();
+  var txtBraco = TextEditingController();
+  var txtPerna = TextEditingController();
+  var txtCostas = TextEditingController();
+  var txtCanela = TextEditingController();
+  var txtValor = TextEditingController();
+  bool cktecido_extra = false;
+  bool ckbotoes_extra = false;
+  bool ck_presente = false;
+  String enviar;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Pedidos'), automaticallyImplyLeading: false,),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(40),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+            OutlinedButton(
+              child: Text('Menu'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: txtPescoco,
+              decoration: InputDecoration(
+                hintText: 'Tamanho em Milimetros',
+                labelText: 'Pescoço',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: txtOmbro,
+              decoration: InputDecoration(
+                hintText: 'Tamanho em Milimetros',
+                labelText: 'Ombro',
+                border: OutlineInputBorder(),
+                alignLabelWithHint: true,
+              ),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: txtBusto,
+              decoration: InputDecoration(
+                hintText: 'Tamanho em Milimetros',
+                labelText: 'Busto',
+                border: OutlineInputBorder(),
+                alignLabelWithHint: true,
+              ),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: txtCintura,
+              decoration: InputDecoration(
+                hintText: 'Tamanho em Milimetros',
+                labelText: 'Cintura',
+                border: OutlineInputBorder(),
+                alignLabelWithHint: true,
+              ),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: txtQuadril,
+              decoration: InputDecoration(
+                hintText: 'Tamanho em Milimetros',
+                labelText: 'Quadril',
+                border: OutlineInputBorder(),
+                alignLabelWithHint: true,
+              ),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: txtComprimento_do_corpo,
+              decoration: InputDecoration(
+                hintText: 'Tamanho em Milimetros',
+                labelText: 'Comprimento do corpo',
+                border: OutlineInputBorder(),
+                alignLabelWithHint: true,
+              ),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: txtBraco,
+              decoration: InputDecoration(
+                hintText: 'Tamanho em Milimetros',
+                labelText: 'Braço',
+                border: OutlineInputBorder(),
+                alignLabelWithHint: true,
+              ),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: txtPerna,
+              decoration: InputDecoration(
+                hintText: 'Tamanho em Milimetros',
+                labelText: 'Perna',
+                border: OutlineInputBorder(),
+                alignLabelWithHint: true,
+              ),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: txtCostas,
+              decoration: InputDecoration(
+                hintText: 'Tamanho em Milimetros',
+                labelText: 'Costas',
+                border: OutlineInputBorder(),
+                alignLabelWithHint: true,
+              ),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: txtCanela,
+              decoration: InputDecoration(
+                hintText: 'Tamanho em Milimetros',
+                labelText: 'Canela',
+                border: OutlineInputBorder(),
+                alignLabelWithHint: true,
+              ),
+            ),
+            SizedBox(height: 10),
+            
+            CheckboxListTile(
+              title: const Text('Para Presente'),
+              value: ck_presente,
+              onChanged: (bool value) {
+                setState(() {
+                  ck_presente = value;
+                });
+              },
+              secondary: Icon(
+                Icons.transfer_within_a_station,
+                color: Colors.black,
+              ),
+              checkColor: Colors.deepPurple[100],
+              tileColor: Colors.indigo[100],
+              activeColor: Colors.black,
+            ),
+            CheckboxListTile(
+              title: const Text('Tecido Extra'),
+              value: ckbotoes_extra,
+              onChanged: (bool value) {
+                setState(() {
+                  ckbotoes_extra = value;
+                });
+              },
+              secondary: Icon(
+                Icons.plus_one,
+                color: Colors.black,
+              ),
+              checkColor: Colors.deepPurple[100],
+              tileColor: Colors.indigo[100],
+              activeColor: Colors.black,
+            ),
+            CheckboxListTile(
+              title: const Text('Botões Extra'),
+              value: cktecido_extra,
+              onChanged: (bool value) {
+                setState(() {
+                  cktecido_extra = value;
+                });
+              },
+              secondary: Icon(
+                Icons.exposure_plus_1_outlined,
+                color: Colors.black,
+              ),
+              checkColor: Colors.deepPurple[100],
+              tileColor: Colors.indigo[100],
+              activeColor: Colors.black,
+            ),
+            RadioListTile(
+                title: Text("Enviar", style: TextStyle(color: Colors.black)),
+                subtitle: Text("Sujeito a taxas",
+                    style: TextStyle(color: Colors.black)),
+                activeColor: Colors.blue[400],
+                value: "D",
+                groupValue: enviar,
+                onChanged: (String valor) {
+                  setState(() {
+                    enviar = valor;
+                  });
+                }),
+            RadioListTile(
+                title: Text("Retirar no local",
+                    style: TextStyle(color: Colors.black)),
+                subtitle:
+                    Text("Sem taxas", style: TextStyle(color: Colors.black)),
+                activeColor: Colors.blue[400],
+                value: "C",
+                groupValue: enviar,
+                onChanged: (String valor) {
+                  setState(() {
+                    enviar = valor;
+                  });
+                }),
+            OutlinedButton(
+              child: Text('VALOR'),
+              onPressed: () {
+                var msg = pedidoc (
+                  txtPescoco.text,
+                  txtOmbro.text,
+                  txtBusto.text,
+                  txtCintura.text,
+                  txtQuadril.text,
+                  txtComprimento_do_corpo.text,
+                  txtBraco.text ,
+                  txtPerna.text,
+                  txtCostas.text,
+                  txtCanela.text,
+                  txtValor.text,
+                );
+                double valor1=double.parse(txtPescoco.text)*0.05;
+                double valor2=double.parse(txtOmbro.text)*0.10;
+                double valor3=double.parse(txtBusto.text)*0.05;
+                double valor4=double.parse(txtCintura.text)*0.05;
+                double valor5=double.parse(txtQuadril.text)*0.15;
+                double valor6=double.parse(txtComprimento_do_corpo.text)*0.25;
+                double valor7=double.parse(txtBraco.text)*0.05;
+                double valor8=double.parse(txtPerna.text)*0.05;
+                double valor9=double.parse(txtCostas.text)*0.1;
+                double valor10=double.parse(txtCanela.text)*0.05;
+                double total=valor1+valor2+valor3+valor4+valor5+valor6+valor7+valor8+valor9+valor10;
+                msg.valor = total.toString();
+                print(msg.pescoco.toString());
+                Navigator.pushNamed(
+                  context,
+                  '/Carrinho',
+                  arguments: msg
+                );
+              },
+            ),
+          ]),
+        ),
+      ),
+    );
+  }
+}
+
+//
+//Tela do Carrinho - Victor
+//
+class Carrinho extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    pedidoc msg = ModalRoute.of(context).settings.arguments;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Carrinho'),
+       
+        //Remover o ícone de Voltar
+        automaticallyImplyLeading: false,
+      ),
+      backgroundColor: Colors.white,
+      body:       
+       SingleChildScrollView(
+        child:
+      Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(40),
+        child:
+            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              OutlinedButton(
+                child: Text('PEDIDO'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+          SizedBox(height: 40),
+          Text('Pescoço',
+              style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic)),
+              SizedBox(height: 10),
+          Text(msg.pescoco, style: TextStyle(fontSize: 24)),
+          SizedBox(height: 20),
+          Text('Ombro',
+              style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic)),
+              SizedBox(height: 10),
+          Text(msg.ombro, style: TextStyle(fontSize: 24)),
+          SizedBox(height: 20),
+          Text('Busto',
+              style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic)),
+              SizedBox(height: 10),
+          Text(msg.busto, style: TextStyle(fontSize: 24)),
+          SizedBox(height: 20),
+          Text('Cintura',
+              style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic)),
+              SizedBox(height: 10),
+          Text(msg.cintura, style: TextStyle(fontSize: 24)),
+          SizedBox(height: 20),
+          Text('Quadril',
+              style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic)),
+              SizedBox(height: 10),
+          Text(msg.quadril, style: TextStyle(fontSize: 24)),
+          SizedBox(height: 20),
+          Text('Comprimento do corpo',
+              style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic)),
+              SizedBox(height: 10),
+          Text(msg.comprimento_do_corpo.toString(), style: TextStyle(fontSize: 24)),
+          Text('Braço',
+              style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic)),
+              SizedBox(height: 10),
+          Text(msg.braco, style: TextStyle(fontSize: 24)),
+          SizedBox(height: 20),
+          Text('Perna',
+              style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic)),
+              SizedBox(height: 10),
+          Text(msg.perna, style: TextStyle(fontSize: 24)),
+          SizedBox(height: 20),
+          Text('Costas',
+              style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic)),
+              SizedBox(height: 10),
+          Text(msg.costas, style: TextStyle(fontSize: 24)),
+          SizedBox(height: 20),
+          Text('Canela',
+              style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic)),
+              SizedBox(height: 10),
+          Text(msg.canela, style: TextStyle(fontSize: 24)),
+          SizedBox(height: 20),
+          Text('VALOR TOTAL',
+              style: TextStyle(fontSize: 40, fontStyle: FontStyle.italic)),
+              SizedBox(height: 10),
+          Text(msg.valor, style: TextStyle(fontSize: 35)),
+        ]),
+      )),
+    );
+  }
+}
+
+//
+//Tela Sobre -Léo
+//
+class Sobre extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Sobre'),centerTitle: true,
+
+        //Remover o ícone de Voltar
+        automaticallyImplyLeading: false,
+        
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+
+              OutlinedButton(
+                child: Text('Voltar'),
+                onPressed: () {
+
+                  //Voltar para PrimeiraTela()
+                  Navigator.pop(context, '/segunda');
+
+                },
+              ),
+            ],
+          ),
+          SizedBox(height: 20),
+          Text('Tema:', style: TextStyle(fontSize: 25, color: Colors.black)),
+          SizedBox(height: 10),
+          Text('Loja de Cosplay.', style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),),
+          SizedBox(height: 20),
+          Text('Objetivo:', style: TextStyle(fontSize: 25, color: Colors.black),),
+          SizedBox(height: 10),
+          Text('O aplicativo tem como objetivo simular a experiência de realizar uma encomenda para uma roupa do tipo "cosplay".', style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),),
+
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              PerfilWidget('lib/images/Leonardo-editado.png', 'Leonardo Benelli Agostinho', '829.209'),
+              PerfilWidget('lib/images/Victor.png', 'Victor Hugo Lopes da Silva Moro', '828.976'),
+            ],
+          ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Ajuda extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Sobre'),centerTitle: true,
+
+        //Remover o ícone de Voltar
+        automaticallyImplyLeading: false,
+        
+      ),
+      body: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+
+              OutlinedButton(
+                child: Text('Voltar'),
+                onPressed: () {
+
+                  //Voltar para PrimeiraTela()
+                  Navigator.pop(context, '/segunda');
+
+                },
+              ),
+            ],
+          ),
+           SizedBox(height: 20),
+            Text('Por favor, entre em contato com o seguinte número:', style: TextStyle(fontSize: 25, color:Colors.black)),
+            Text('+55(016)99129-1886', style: TextStyle(fontSize: 20, color:Colors.black)),
+            Text('Disponível das 15:30 às 19:30', style: TextStyle(fontSize: 20, color:Colors.black)),
+            Text('Segunda-feira à sexta-feira*', style: TextStyle(fontSize: 20, color:Colors.black)),
+            SizedBox(height:10),
+            Text('*Quarta-feira e final de semana não disponíveis', style: TextStyle(fontSize: 5, color:Colors.black)),
+          ],
+        )
+      ),
+    );
+  }
+}
 //Usuário de Teste Leonardo e suas maquinações maliciosas e desesperadoras
 //Senha de Teste SenhasuperlongaTipoIncrivelmentelongaquehackertempreguiçadeHackear
