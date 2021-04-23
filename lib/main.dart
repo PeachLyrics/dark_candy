@@ -9,7 +9,7 @@ void main() {
 
     //Tema
     theme: ThemeData(
-      primaryColor: Colors.indigo[700],
+      primaryColor: Colors.pink[200],
       backgroundColor: Colors.white,
       textTheme: TextTheme(headline1: TextStyle(fontSize: 10), headline2: TextStyle(fontSize: 20), headline3: TextStyle(fontSize: 20, color: Colors.white)),
     ),
@@ -27,7 +27,7 @@ void main() {
       '/Ajuda': (context) => Ajuda(),
       '/Parte de cima': (context) => PartCima(),
       '/Parte de baixo': (context) => PartBaixo(),
-      '/Sapatos': (context) => Sapatos(),
+      '/Conjunto': (context) => Conjunto(),
     },
   ));
 }
@@ -124,8 +124,8 @@ class _TeladeLoginState extends State<TeladeLogin> {
           backgroundColor: MaterialStateProperty.resolveWith<Color>(
             (Set<MaterialState> states){
               if(states.contains(MaterialState.pressed))
-              return Colors.indigo[900];
-              return Colors.indigo[700];
+              return Colors.pink[300];
+              return Colors.pink[100];
             },
           ),),
         child: Text(rotulo, style: Theme.of(context).textTheme.headline3),
@@ -174,7 +174,7 @@ class MenuPrincipal extends StatelessWidget {
             ListTile(
               
               leading: Icon(Icons.arrow_forward, color: Colors.pink[400]),
-              trailing: Icon(Icons.person, color: Colors.indigo[700]),
+              trailing: Icon(Icons.person, color: Colors.pink[400]),
               title: Text('PERFIL', style: TextStyle(fontSize: 32, color:Colors.black)),
               
               onTap: (){
@@ -187,7 +187,7 @@ class MenuPrincipal extends StatelessWidget {
 
             ListTile(
               leading: Icon(Icons.arrow_forward, color: Colors.pink[400]),
-              trailing: Icon(Icons.photo_library, color: Colors.indigo[700]),
+              trailing: Icon(Icons.photo_library, color: Colors.pink[400]),
               title: Text('GALERIA', style: TextStyle(fontSize: 32, color:Colors.black)),
               
               onTap: (){
@@ -199,7 +199,7 @@ class MenuPrincipal extends StatelessWidget {
 
             ListTile(
               leading: Icon(Icons.arrow_forward, color: Colors.pink[400]),
-              trailing: Icon(Icons.content_cut,color: Colors.indigo[700]),
+              trailing: Icon(Icons.content_cut,color: Colors.pink[400]),
               title: Text('PEDIDO', style: TextStyle(fontSize: 32, color:Colors.black)),
               
               onTap: (){
@@ -211,7 +211,7 @@ class MenuPrincipal extends StatelessWidget {
 
             /*ListTile(
               leading: Icon(Icons.arrow_forward, color: Colors.pink[400]),
-              trailing: Icon(Icons.shopping_cart, color: Colors.indigo[700]),
+              trailing: Icon(Icons.shopping_cart, color: Colors.pink[400]),
               title: Text('CARRINHO', style: TextStyle(fontSize: 32, color:Colors.black)),
               
               onTap: (){
@@ -223,7 +223,7 @@ class MenuPrincipal extends StatelessWidget {
 
             ListTile(
               leading: Icon(Icons.arrow_forward, color: Colors.pink[400]),
-              trailing: Icon(Icons.bookmark_border, color: Colors.indigo[700]),
+              trailing: Icon(Icons.bookmark_border, color: Colors.pink[400]),
               title: Text('SOBRE', style: TextStyle(fontSize: 32, color:Colors.black)),
               
               onTap: (){
@@ -235,7 +235,7 @@ class MenuPrincipal extends StatelessWidget {
 
             ListTile(
               leading: Icon(Icons.arrow_forward, color: Colors.pink[400]),
-              trailing: Icon(Icons.accessibility, color: Colors.indigo[700]),
+              trailing: Icon(Icons.accessibility, color: Colors.pink[400]),
               title: Text('AJUDA', style: TextStyle(fontSize: 32, color:Colors.black)),
               
               onTap: (){
@@ -375,11 +375,11 @@ class Galeria extends StatelessWidget{
             SizedBox(height: 5),
             ListTile(
               leading: Icon(Icons.arrow_forward, color: Colors.pink[400]),
-              title: Text('Sapatos', style: TextStyle(fontSize: 32, color:Colors.black)),
+              title: Text('Conjunto', style: TextStyle(fontSize: 32, color:Colors.black)),
               
               onTap: (){
                 print('item pressionado');
-                Navigator.pushNamed(context, '/Sapatos');
+                Navigator.pushNamed(context, '/Conjunto');
               },
               hoverColor: Colors.indigo[100],
             ),
@@ -413,16 +413,16 @@ class PartCima extends StatelessWidget{
                 onPressed: () {
 
                   //Voltar para PrimeiraTela()
-                  Navigator.pop(context, '/segunda');
+                  Navigator.pop(context, '/Galeria');
 
                 },
               ),
             ],
           ),
           SizedBox(height: 20),
-            GaleriaWidget(''),
-            GaleriaWidget(''),
-            GaleriaWidget(''),
+            GaleriaWidget('/lib/images/Parte de cima.png'),
+            GaleriaWidget('/lib/images/Parte de cima 2.png'),
+            GaleriaWidget('/lib/images/Parte de cima 5.png'),
           ],
         ),
       )
@@ -452,28 +452,27 @@ class PartBaixo extends StatelessWidget{
                 onPressed: () {
 
                   //Voltar para PrimeiraTela()
-                  Navigator.pop(context, '/segunda');
+                  Navigator.pop(context, '/Galeria');
 
                 },
               ),
             ],
           ),
           SizedBox(height: 20),
-            GaleriaWidget(''),
-            GaleriaWidget(''),
-            GaleriaWidget(''),
+            GaleriaWidget('/lib/images/Parte de baixo.png'),
+            GaleriaWidget('/lib/images/Parte de baixo 2.png'),
           ],
         ),
       )
     );
   }
 }
-class Sapatos extends StatelessWidget{
+class Conjunto extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sapatos'),centerTitle: true,
+        title: Text('Conjunto'),centerTitle: true,
 
         //Remover o ícone de Voltar
         automaticallyImplyLeading: false,
@@ -491,16 +490,19 @@ class Sapatos extends StatelessWidget{
                 onPressed: () {
 
                   //Voltar para PrimeiraTela()
-                  Navigator.pop(context, '/segunda');
+                  Navigator.pop(context, '/Galeria');
 
                 },
               ),
             ],
           ),
           SizedBox(height: 20),
-            GaleriaWidget(''),
-            GaleriaWidget(''),
-            GaleriaWidget(''),
+            GaleriaWidget('/lib/images/Conjunto.png'),
+            GaleriaWidget('/lib/images/Conjunto 2.png'),
+            GaleriaWidget('/lib/images/Conjunto 3.png'),
+            GaleriaWidget('/lib/images/Conjunto 4.png'),
+            GaleriaWidget('/lib/images/Conjunto 5.png'),
+            GaleriaWidget('/lib/images/Conjunto 6.png'),
           ],
         ),
       )
@@ -727,7 +729,7 @@ class _PedidoTelaState extends State<Pedido> {
                 title: Text("Enviar", style: TextStyle(color: Colors.black)),
                 subtitle: Text("Sujeito a taxas",
                     style: TextStyle(color: Colors.black)),
-                activeColor: Colors.blue[400],
+                activeColor: Colors.pink[200],
                 value: "D",
                 groupValue: enviar,
                 onChanged: (String valor) {
@@ -740,7 +742,7 @@ class _PedidoTelaState extends State<Pedido> {
                     style: TextStyle(color: Colors.black)),
                 subtitle:
                     Text("Sem taxas", style: TextStyle(color: Colors.black)),
-                activeColor: Colors.blue[400],
+                activeColor: Colors.pink[200],
                 value: "C",
                 groupValue: enviar,
                 onChanged: (String valor) {
