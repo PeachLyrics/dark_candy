@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "169829908151",
+    "project_id": "darkcandy-c8e98",
+    "storage_bucket": "darkcandy-c8e98.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169829908151:android:4d71b8bfdd6522c9e6d732",
+        "android_client_info": {
+          "package_name": "com.example.dark_candy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "169829908151-r4t5e8cn2dd7af47guv9vmqoh9tnbibk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfclWPzaNaJe-l4DJvElzjp4eK-niJQsE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "169829908151-r4t5e8cn2dd7af47guv9vmqoh9tnbibk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
