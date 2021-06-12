@@ -1,8 +1,14 @@
+import 'package:path/path.dart';
 import 'package:dark_candy/Galeria.dart';
 import 'package:flutter/material.dart';
 import 'package:dark_candy/PerfilDev.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'DarkCandy',
@@ -28,6 +34,7 @@ void main() {
       '/Parte de cima': (context) => PartCima(),
       '/Parte de baixo': (context) => PartBaixo(),
       '/Conjunto': (context) => Conjunto(),
+      '/Nova conta': (context) => NovaConta(),
     },
   ));
 }
@@ -80,7 +87,8 @@ class _TeladeLoginState extends State<TeladeLogin> {
 
               campoTexto('Nome de usuário', txtLogin),
               campoTexto('Senha', txtSenha),
-              botao('Login'),
+              botaologin('Login'),
+              botaonovaconta('Nova conta')
 
             ]),
           ),
@@ -97,12 +105,12 @@ class _TeladeLoginState extends State<TeladeLogin> {
     child: TextFormField(
       //Variável que receberá o valor contido no campo de texto
       controller: variavel,
-      style: Theme.of(context).textTheme.headline2,
+      style: Theme.of(this.context).textTheme.headline2,
       decoration: InputDecoration(
         labelText: rotulo,
-        labelStyle: Theme.of(context).textTheme.headline2,
+        labelStyle: Theme.of(this.context).textTheme.headline2,
         hintText: 'Entre com suas informações',
-        hintStyle: Theme.of(context).textTheme.headline1,
+        hintStyle: Theme.of(this.context).textTheme.headline1,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         )
@@ -112,9 +120,9 @@ class _TeladeLoginState extends State<TeladeLogin> {
     );
   }
 
-  //Botão
+  //Botão de login
 
-  Widget botao(rotulo){
+  Widget botaologin(rotulo){
     return Container(
       padding: EdgeInsets.only(top: 20),
       width: double.infinity,
@@ -128,17 +136,45 @@ class _TeladeLoginState extends State<TeladeLogin> {
               return Colors.pink[100];
             },
           ),),
-        child: Text(rotulo, style: Theme.of(context).textTheme.headline3),
+        child: Text(rotulo, style: Theme.of(this.context).textTheme.headline3),
         onPressed: (){
           var msg = Mensagem (
                 txtLogin.text,
               );
-          Navigator.pushNamed(context, '/segunda', arguments: msg);
+          Navigator.pushNamed(this.context, '/segunda', arguments: msg);
+        },
+      ),
+    );
+  }
+
+  //Botão para criar nova conta
+  Widget botaonovaconta(rotulo){
+    return Container(
+      padding: EdgeInsets.only(top: 20),
+      width: double.infinity,
+      height: 70,
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states){
+              if(states.contains(MaterialState.pressed))
+              return Colors.pink[300];
+              return Colors.pink[100];
+            },
+          ),),
+        child: Text(rotulo, style: Theme.of(this.context).textTheme.headline3),
+        onPressed: (){
+          var msg = Mensagem (
+                txtLogin.text,
+              );
+          Navigator.pushNamed(this.context, '/Nova conta', arguments: msg);
         },
       ),
     );
   }
 }
+
+
 
 //
 // MENU PRINCIPAL - Victor
@@ -982,6 +1018,21 @@ class Ajuda extends StatelessWidget{
             Text('*Quarta-feira e final de semana não disponíveis', style: TextStyle(fontSize: 5, color:Colors.black)),
           ],
         )
+      ),
+    );
+  }
+}
+
+class NovaConta extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Criar conta'),centerTitle: true,
+
+        //Remover o ícone de Voltar
+        automaticallyImplyLeading: false,
+        
       ),
     );
   }
