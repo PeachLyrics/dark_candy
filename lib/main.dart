@@ -85,8 +85,8 @@ class _TeladeLoginState extends State<TeladeLogin> {
               child: Column(children: [
               Image.asset('lib/images/dark-candy-water-mark.PNG'),
 
-              campoTexto('Nome de usuário', txtLogin),
-              campoTexto('Senha', txtSenha),
+              campoTexto('E-mail', txtLogin.text),
+              campoTexto('Senha', txtSenha.text),
               botaologin('Login'),
               botaonovaconta('Nova conta')
 
@@ -138,10 +138,7 @@ class _TeladeLoginState extends State<TeladeLogin> {
           ),),
         child: Text(rotulo, style: Theme.of(this.context).textTheme.headline3),
         onPressed: (){
-          var msg = Mensagem (
-                txtLogin.text,
-              );
-          Navigator.pushNamed(this.context, '/segunda', arguments: msg);
+          login(txtLogin.text, txtSenha.text);
         },
       ),
     );
@@ -171,6 +168,38 @@ class _TeladeLoginState extends State<TeladeLogin> {
         },
       ),
     );
+  }
+
+  void login(email, senha){
+
+    FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email, password: senha).then((resultado) {
+
+        Navigator.pushReplacementNamed(
+          this.context, '/segunda', arguments: resultado.user.uid);
+
+    }).catchError((erro){
+
+      var errorCode = erro.code;
+      var mensagemdeerro = '';
+      if (errorCode == 'user-not-found'){
+        mensagemdeerro = 'ユーザーが見つかりません。';
+      }else if (errorCode == 'wrong-password'){
+        mensagemdeerro = '無効なパスワード。';
+      }else if (errorCode == 'invalid-email'){
+        mensagemdeerro = '無効なメール。';
+      }else{
+        mensagemdeerro = erro.message;
+      }
+      ScaffoldMessenger.of(this.context).showSnackBar(
+        SnackBar(
+          content: Text('エラー: $mensagemdeerro'),
+          duration: Duration(seconds: 2),
+        )
+      );
+
+    });
+
   }
 }
 
@@ -1023,7 +1052,17 @@ class Ajuda extends StatelessWidget{
   }
 }
 
-class NovaConta extends StatelessWidget{
+class NovaConta extends StatefulWidget {
+  @override
+  _NovaContaState createState() => _NovaContaState();
+}
+
+class _NovaContaState extends State<NovaConta>{
+
+  var txtNome = TextEditingController();
+  var txtEmail = TextEditingController();
+  var txtSenha = TextEditingController();
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -1034,7 +1073,113 @@ class NovaConta extends StatelessWidget{
         automaticallyImplyLeading: false,
         
       ),
+      body: Container(
+        padding: EdgeInsets.all(50),
+        child: ListView(
+          children: [
+            TextField(
+              controller: txtNome,
+              style:
+                  TextStyle(color: Colors.pinkAccent, fontWeight: FontWeight.w300),
+              decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.person), labelText: 'Nome'),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: txtEmail,
+              style:
+                  TextStyle(color: Colors.pinkAccent, fontWeight: FontWeight.w300),
+              decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.email), labelText: 'E-mail'),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              obscureText: true,
+              controller: txtSenha,
+              style:
+                  TextStyle(color: Colors.pinkAccent, fontWeight: FontWeight.w300),
+              decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.lock), labelText: 'Senha'),
+            ),
+            SizedBox(height: 40),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 150,
+                  child: OutlinedButton(
+                    child: Text('Criar nova conta'),
+                    onPressed: () {
+
+                      criarConta(txtNome.text,txtEmail.text,txtSenha.text);
+                    },
+                  ),
+                ),
+                Container(
+                  width: 150,
+                  child: OutlinedButton(
+                    child: Text('Cancelar'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 60),
+          ],
+        ),
+      ),
     );
+  }
+
+  //
+  // CRIAR CONTA no Firebase Auth
+  //
+  void criarConta(nome,email,senha){
+
+    FirebaseAuth fa = FirebaseAuth.instance;
+
+    fa.createUserWithEmailAndPassword(email: email, password: senha)
+      .then((resultado){
+
+        //armazenar dados da conta no Firestore
+        var db = FirebaseFirestore.instance;
+        db.collection('usuarios').doc(resultado.user.uid).set(
+          {
+            'Nome' : nome,
+            'E-mail': email,
+          }
+        ).then((valor){
+          ScaffoldMessenger.of(this.context).showSnackBar(
+            SnackBar(
+              content: Text('ユーザーが正常に作成されました。'),
+              duration: Duration(seconds: 2),
+            )
+          );
+          Navigator.pop(this.context);
+        });
+
+    }).catchError((erro){
+      var errorCode = erro.code;
+      print(errorCode);
+      if(errorCode == 'email-already-in-use'){
+        ScaffoldMessenger.of(this.context).showSnackBar(
+          SnackBar(
+            content: Text('入力したメールはすでに使用されています。'),
+            duration: Duration(seconds: 2),
+          )
+        );
+      }else{
+        ScaffoldMessenger.of(this.context).showSnackBar(
+            SnackBar(
+              content: Text('エラー  ${erro.message}'),
+              duration: Duration(seconds: 2),
+            )
+          );
+      }
+    });
+
   }
 }
 //Usuário de Teste Leonardo e suas maquinações maliciosas e desesperadoras
