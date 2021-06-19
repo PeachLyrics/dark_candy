@@ -335,7 +335,7 @@ class _MenuPrincipalState extends State<MenuPrincipal> {
               
               onTap: (){
                 print('item pressionado');
-                Navigator.pushNamed(context, '/Pedido');
+                Navigator.pushNamed(context, '/Pedido',arguments:usuar.id);
               },
               hoverColor: Colors.pink[100],
             ),
@@ -960,6 +960,30 @@ class _PedidoTelaState extends State<Pedido> {
                   arguments: msg
                 );
               },
+            ),
+            OutlinedButton(
+              child: Text('Salvar Medidas'),
+              onPressed: () {
+                      var db = FirebaseFirestore.instance;
+                    ;
+                      
+                        //Adicionar um novo documento
+                        db.collection('Medidas').add({
+                          
+                          "Pescoço": txtPescoco.text,
+                           "Ombro": txtOmbro.text,
+                            "Busto": txtBusto.text,
+                           "Cintura":  txtCintura.text,
+                           "Quadril":  txtQuadril.text,
+                           "Comprimento":  txtComprimento_do_corpo.text,
+                           "Braço":  txtBraco.text ,
+                           "Perna":  txtPerna.text,
+                          "Costas":  txtCostas.text,
+                          "Canela":  txtCanela.text,
+                        });
+                      
+
+              }
             ),
           ]),
         ),
