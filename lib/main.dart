@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:path/path.dart';
 import 'package:dark_candy/Galeria.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,8 @@ import 'package:dark_candy/PerfilDev.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dark_candy/Usuario.dart';
+import 'package:dark_candy/Biografias.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,12 +39,13 @@ void main() async{
       '/Parte de baixo': (context) => PartBaixo(),
       '/Conjunto': (context) => Conjunto(),
       '/Nova conta': (context) => NovaConta(),
+      '/Cadastro Bio': (context) => TelaCadastroBio(),
     },
   ));
 }
 
 class Mensagem{
-  final String login;
+  String login;
   Mensagem(this.login);
 }
 
@@ -85,8 +90,8 @@ class _TeladeLoginState extends State<TeladeLogin> {
               child: Column(children: [
               Image.asset('lib/images/dark-candy-water-mark.PNG'),
 
-              campoTexto('E-mail', txtLogin.text),
-              campoTexto('Senha', txtSenha.text),
+              campoTexto('E-mail', txtLogin),
+              campoTextoSenha('Senha', txtSenha),
               botaologin('Login'),
               botaonovaconta('Nova conta')
 
@@ -103,6 +108,28 @@ class _TeladeLoginState extends State<TeladeLogin> {
     return Container(
     padding: EdgeInsets.symmetric(vertical: 10),
     child: TextFormField(
+      //Variável que receberá o valor contido no campo de texto
+      controller: variavel,
+      style: Theme.of(this.context).textTheme.headline2,
+      decoration: InputDecoration(
+        labelText: rotulo,
+        labelStyle: Theme.of(this.context).textTheme.headline2,
+        hintText: 'Entre com suas informações',
+        hintStyle: Theme.of(this.context).textTheme.headline1,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        )
+      ),
+
+    ),
+    );
+  }
+
+  Widget campoTextoSenha(rotulo,variavel){
+    return Container(
+    padding: EdgeInsets.symmetric(vertical: 10),
+    child: TextFormField(
+      obscureText: true,
       //Variável que receberá o valor contido no campo de texto
       controller: variavel,
       style: Theme.of(this.context).textTheme.headline2,
@@ -203,19 +230,33 @@ class _TeladeLoginState extends State<TeladeLogin> {
   }
 }
 
-
+class MenuPrincipal extends StatefulWidget {
+  @override
+  _MenuPrincipalState createState() => _MenuPrincipalState();
+}
 
 //
 // MENU PRINCIPAL - Victor
 //
-class MenuPrincipal extends StatelessWidget {
+class _MenuPrincipalState extends State<MenuPrincipal> {
+
+  CollectionReference usuar;
+
+  @override
+  void initState() {
+    super.initState();
+    usuar = FirebaseFirestore.instance.collection('usuarios');
+  }
+
+  Widget itemLista(item) {
+    Usuario usu = Usuario.fromJson(item.data(), item.id);
+    return ListTile(
+      title: Text('Seja bem vindo(a): '+usu.nome, style: TextStyle(fontSize: 24)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    //Receber o objeto da classe Mensagem
-    Mensagem msg = ModalRoute.of(context).settings.arguments;
-    if (msg == null){
-      msg = Mensagem('');
-    }
     return Scaffold(
       appBar: AppBar(title: Text('EXPLORADOR'), centerTitle: true ),
       backgroundColor: Colors.white,
@@ -227,9 +268,34 @@ class MenuPrincipal extends StatelessWidget {
         //
         child: ListView(
           children: [
+            StreamBuilder<QuerySnapshot>(
 
-            Text('Seja bem vindo(a), '+msg.login+'.', style: TextStyle(fontSize: 15, color:Colors.black)),
-            SizedBox(height: 10),
+          //fonte de dados
+          stream: usuar.snapshots(),
+
+          //aparência
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                return Center(child: Text('Erro ao conectar no Firebase'));
+
+              case ConnectionState.waiting:
+                return Center(child: CircularProgressIndicator());
+
+              default:
+                final dados = snapshot.requireData;
+
+                return SizedBox(
+                  height: 50,
+                      child: ListView.builder(
+                      itemCount: dados.size,
+                      itemBuilder: (context, index) {
+                        return itemLista(dados.docs[index]);
+                      }
+                  ),
+                );
+            }
+          }),
 
             Text('Lista de opções',
                  style: TextStyle(fontSize: 30, color:Colors.black),
@@ -244,7 +310,7 @@ class MenuPrincipal extends StatelessWidget {
               
               onTap: (){
                 print('item pressionado');
-                Navigator.pushNamed(context, '/Perfil', arguments: msg);
+                Navigator.pushNamed(context, '/Perfil');
               },
               hoverColor: Colors.pink[100],
 
@@ -273,18 +339,6 @@ class MenuPrincipal extends StatelessWidget {
               },
               hoverColor: Colors.pink[100],
             ),
-
-            /*ListTile(
-              leading: Icon(Icons.arrow_forward, color: Colors.pink[400]),
-              trailing: Icon(Icons.shopping_cart, color: Colors.pink[400]),
-              title: Text('CARRINHO', style: TextStyle(fontSize: 32, color:Colors.black)),
-              
-              onTap: (){
-                print('item pressionado');
-                Navigator.pushNamed(context, '/Carrinho');
-              },
-              hoverColor: Colors.pink[100],
-            ),*/ //removido por falta de razão dele estar aqui.
 
             ListTile(
               leading: Icon(Icons.arrow_forward, color: Colors.pink[400]),
@@ -320,16 +374,38 @@ class MenuPrincipal extends StatelessWidget {
 //
 // Tela do Perfil - Léo
 //
-class Perfil extends StatelessWidget{
+class Perfil extends StatefulWidget{
+  @override
+  _PerfilState createState() => _PerfilState();
+}
+class _PerfilState extends State<Perfil>{
   
   final txtBio = TextEditingController();
+  CollectionReference bios;
+
+  @override
+  void initState() {
+    super.initState();
+    bios = FirebaseFirestore.instance.collection('bio');
+  }
+
+  Widget itemLista(item) {
+    Biografias bio = Biografias.fromJson(item.data(), item.id);
+    return ListTile(
+      title: Text(bio.biografia, style: TextStyle(fontSize: 24)),
+      trailing: IconButton(
+        icon: Icon(Icons.delete, color: Colors.pinkAccent,),
+        onPressed: () {
+          // Apagar um café
+          bios.doc(bio.id).delete();
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    Mensagem msg = ModalRoute.of(context).settings.arguments;
-    if (msg == null){
-      msg = Mensagem('');
-    }
+    //var msg = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
         title: Text('Perfil'),centerTitle: true,
@@ -344,40 +420,74 @@ class Perfil extends StatelessWidget{
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch, 
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-
-                OutlinedButton(
-                  child: Text('Voltar'),
-                  onPressed: () {
-
-                    //Voltar para PrimeiraTela()
-                    Navigator.pop(context, '/segunda');
-
-                  },
-                ),
-              ],
-            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(Icons.supervised_user_circle, color: Colors.white, size: 300),
-                Text(msg.login, style: TextStyle(fontSize: 25, color:Colors.black)),
                 SizedBox(height: 40),
               ],
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Biografia:', style: TextStyle(fontSize: 25, color: Colors.black)),
-                SizedBox(height: 10),
-                TextField(
-                  controller: txtBio, keyboardType: TextInputType.text, maxLines: 15, decoration: InputDecoration(labelText: 'Fale um pouco sobre você:', border: OutlineInputBorder(), alignLabelWithHint: true),
-                )
-              ],
-            )
+
+            StreamBuilder<QuerySnapshot>(
+
+          //fonte de dados
+          stream: bios.snapshots(),
+
+          //aparência
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                return Center(child: Text('Erro ao conectar no Firebase'));
+
+              case ConnectionState.waiting:
+                return Center(child: CircularProgressIndicator());
+
+              default:
+                final dados = snapshot.requireData;
+
+                return Expanded(
+                      child: ListView.builder(
+                      itemCount: dados.size,
+                      itemBuilder: (context, index) {
+                        return itemLista(dados.docs[index]);
+                      }
+                  ),
+                );
+            }
+          }),
+          botaoVoltar('Voltar')
         ]),
+      ),
+      floatingActionButton: FloatingActionButton(
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.pinkAccent,
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.pushNamed(context, '/Cadastro Bio');
+        },
+      ),
+    );
+  }
+  
+  Widget botaoVoltar(rotulo){
+    return Container(
+      padding: EdgeInsets.only(top: 20),
+      width: double.infinity,
+      height: 70,
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states){
+              if(states.contains(MaterialState.pressed))
+              return Colors.pink[300];
+              return Colors.pink[100];
+            },
+          ),),
+        child: Text(rotulo, style: Theme.of(this.context).textTheme.headline3),
+        onPressed: (){
+          //Voltar para PrimeiraTela()
+          Navigator.pop(this.context, '/segunda');
+        },
       ),
     );
   }
@@ -1007,7 +1117,9 @@ class Sobre extends StatelessWidget{
     );
   }
 }
-
+//
+// Tela de Ajuda - Léo
+//
 class Ajuda extends StatelessWidget{
   @override
   Widget build(BuildContext context){
@@ -1051,7 +1163,9 @@ class Ajuda extends StatelessWidget{
     );
   }
 }
-
+//
+// Tela de nova conta - Léo
+//
 class NovaConta extends StatefulWidget {
   @override
   _NovaContaState createState() => _NovaContaState();
@@ -1059,7 +1173,7 @@ class NovaConta extends StatefulWidget {
 
 class _NovaContaState extends State<NovaConta>{
 
-  var txtNome = TextEditingController();
+  var txtBio = TextEditingController();
   var txtEmail = TextEditingController();
   var txtSenha = TextEditingController();
 
@@ -1078,7 +1192,7 @@ class _NovaContaState extends State<NovaConta>{
         child: ListView(
           children: [
             TextField(
-              controller: txtNome,
+              controller: txtBio,
               style:
                   TextStyle(color: Colors.pinkAccent, fontWeight: FontWeight.w300),
               decoration: InputDecoration(
@@ -1111,7 +1225,7 @@ class _NovaContaState extends State<NovaConta>{
                     child: Text('Criar nova conta'),
                     onPressed: () {
 
-                      criarConta(txtNome.text,txtEmail.text,txtSenha.text);
+                      criarConta(txtBio.text,txtEmail.text,txtSenha.text);
                     },
                   ),
                 ),
@@ -1134,7 +1248,7 @@ class _NovaContaState extends State<NovaConta>{
   }
 
   //
-  // CRIAR CONTA no Firebase Auth
+  // CRIAR CONTA no Firebase Auth - Léo
   //
   void criarConta(nome,email,senha){
 
@@ -1180,6 +1294,96 @@ class _NovaContaState extends State<NovaConta>{
       }
     });
 
+  }
+}
+//
+// Tela de Cadastro - Léo
+//
+class TelaCadastroBio extends StatefulWidget {
+  @override
+  _TelaCadastroBioState createState() => _TelaCadastroBioState();
+}
+
+class _TelaCadastroBioState extends State<TelaCadastroBio> {
+  
+  var txtBio = TextEditingController();
+
+  //Recuperar um DOCUMENTO a partir do ID
+  void getDocumentById(String id) async {
+    await FirebaseFirestore.instance
+        .collection('bio').doc(id).get()
+        .then((value) {
+          txtBio.text = value.data()['Biografia'];
+    });
+  }
+  
+   @override
+  Widget build(BuildContext context) {
+    //Recuperar o ID que foi passado como argumento
+    var id = ModalRoute.of(context)?.settings.arguments;
+
+    if (id != null) {
+      if (txtBio.text == ''){getDocumentById(id.toString());}
+    }
+    return  Scaffold(
+      appBar: AppBar(
+          title: Text('Biografia'),
+          centerTitle: true,
+          backgroundColor: Colors.brown
+      ),
+      backgroundColor: Colors.brown[50],
+
+      body: Container(
+        padding: EdgeInsets.all(50),
+        child: ListView(
+          children: [
+
+            TextField(
+                  controller: txtBio, keyboardType: TextInputType.text, maxLines: 15, decoration: InputDecoration(labelText: 'Fale um pouco sobre você:', border: OutlineInputBorder(), alignLabelWithHint: true),
+                ),
+            SizedBox(height: 20),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 150,
+                  child: OutlinedButton(
+                    child: Text('Salvar'),
+                    onPressed: (){
+
+                      var db = FirebaseFirestore.instance;
+
+                      if(id == null){
+                        //Adicionar um novo documento
+                        db.collection('bio').add({
+                          "Biografia":txtBio.text,
+                        });
+                      }else{
+                        //Atualizar um documento
+                        db.collection('bio').doc(id.toString()).update({
+                          "Biografia":txtBio.text,
+                        });
+                      }
+                      Navigator.pop(context);
+                    }
+                  ),
+                ),
+                Container(
+                  width: 150,
+                  child: OutlinedButton(
+                    child: Text('Cancelar'),
+                    onPressed: (){
+                      Navigator.pop(context);
+                    }
+                  ),
+                ),
+              ],
+            )
+          ]
+        ),
+      ),
+    );
   }
 }
 //Usuário de Teste Leonardo e suas maquinações maliciosas e desesperadoras
